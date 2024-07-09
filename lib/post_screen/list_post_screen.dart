@@ -63,6 +63,7 @@ class _ListPostScreenState extends State<ListPostScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: 'error',
             onPressed: () {
               throw Exception('Intentional error for testing purposes');
             },
@@ -70,6 +71,7 @@ class _ListPostScreenState extends State<ListPostScreen> {
           ),
           const SizedBox(height: 16.0),
           FloatingActionButton(
+            heroTag: 'add',
             onPressed: () {
               GoRouter.of(context).go('/add_post');
             },
