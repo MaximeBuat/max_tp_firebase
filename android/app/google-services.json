@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657363232859",
+    "project_id": "tpfirebase-e08fe",
+    "storage_bucket": "tpfirebase-e08fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657363232859:android:f9368ef9719fca91c5377e",
+        "android_client_info": {
+          "package_name": "com.example.max_tp_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADerRXlIn8y-3aY0WduOw6yu-ObLwqafY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
