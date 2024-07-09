@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:max_tp_firebase/post_screen/post_bloc/post_bloc.dart';
-
 
 class ListPostScreen extends StatefulWidget {
   const ListPostScreen({super.key});
@@ -55,7 +55,13 @@ class _ListPostScreenState extends State<ListPostScreen> {
               return const SizedBox.shrink();
           }
         },
-    )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          GoRouter.of(context).go('/add_post');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

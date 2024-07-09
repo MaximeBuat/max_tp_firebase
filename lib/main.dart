@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:max_tp_firebase/firebase_options.dart';
 import 'package:max_tp_firebase/models/post_repository.dart';
+import 'package:max_tp_firebase/post_screen/add_post_bloc/add_post_bloc.dart';
+import 'package:max_tp_firebase/post_screen/add_post_screen.dart';
 import 'package:max_tp_firebase/post_screen/list_post_screen.dart';
 import 'package:max_tp_firebase/post_screen/post_bloc/post_bloc.dart';
 
@@ -14,6 +16,14 @@ final GoRouter _router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const ListPostScreen();
       },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'add_post',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AddPostScreen();
+          },
+        ),
+      ],
     ),
   ],
 );
@@ -30,13 +40,22 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PostBloc(
-        FirestorePostRepository(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PostBloc(
+            FirestorePostRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AddPostBloc(
+            FirestorePostRepository(),
+          ),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: _router,
-      )
+      ),
     );
   }
 }
