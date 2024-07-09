@@ -59,12 +59,25 @@ class _ListPostScreenState extends State<ListPostScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          GoRouter.of(context).go('/add_post');
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              throw Exception('Intentional error for testing purposes');
+            },
+            child: const Icon(Icons.bug_report),
+          ),
+          const SizedBox(height: 16.0),
+          FloatingActionButton(
+            onPressed: () {
+              GoRouter.of(context).go('/add_post');
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
+
   }
 }
