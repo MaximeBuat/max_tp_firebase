@@ -8,3 +8,9 @@ class AddPost extends AddPostEvent {
 
   AddPost(this.post);
 }
+
+class UpdatePost extends AddPostEvent {
+  final Post post;
+
+  UpdatePost(this.post);
+}

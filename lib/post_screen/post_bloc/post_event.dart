@@ -10,13 +10,6 @@ class AddPost extends PostEvent {
 
   AddPost(this.post);
 }
-
-class UpdatePost extends PostEvent {
-  final Post post;
-
-  UpdatePost(this.post);
-}
-
 class PostsUpdated extends PostEvent {
   final List<Post> posts;
 

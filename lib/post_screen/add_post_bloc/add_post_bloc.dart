@@ -11,6 +11,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
 
   AddPostBloc(this.postRepository) : super(const AddPostState()) {
     on<AddPost>(_onAddPost);
+    on<UpdatePost>(_onUpdatePost);
   }
 
   void _onAddPost(AddPost event, Emitter<AddPostState> emit) async {
@@ -18,9 +19,22 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     try {
       await postRepository.addPost(event.post);
       emit(state.copyWith(status: AddPostStatus.success));
+      emit(state.copyWith(status: AddPostStatus.initial));
     } catch (e) {
       emit(state.copyWith(
           status: AddPostStatus.error, error: 'Failed to add post'));
+    }
+  }
+
+  void _onUpdatePost(UpdatePost event, Emitter<AddPostState> emit) async {
+    emit(state.copyWith(status: AddPostStatus.loading));
+    try {
+      await postRepository.updatePost(event.post);
+      emit(state.copyWith(status: AddPostStatus.success));
+      emit(state.copyWith(status: AddPostStatus.initial));
+    } catch (e) {
+      emit(state.copyWith(
+          status: AddPostStatus.error, error: 'Failed to update post'));
     }
   }
 }

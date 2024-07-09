@@ -14,7 +14,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   PostBloc(this.postRepository) : super(const PostState()) {
     on<LoadPosts>(_onLoadPosts);
-    on<UpdatePost>(_onUpdatePost);
     on<PostsUpdated>(_onPostsUpdated);
   }
 
@@ -28,17 +27,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(state.copyWith(
           status: PostStatus.error, error: 'Failed to load posts'));
     });
-  }
-
-  void _onUpdatePost(UpdatePost event, Emitter<PostState> emit) async {
-    emit(state.copyWith(status: PostStatus.loading));
-    try {
-      await postRepository.updatePost(event.post);
-      emit(state.copyWith(status: PostStatus.success));
-    } catch (e) {
-      emit(state.copyWith(
-          status: PostStatus.error, error: 'Failed to update post'));
-    }
   }
 
   void _onPostsUpdated(PostsUpdated event, Emitter<PostState> emit) {

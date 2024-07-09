@@ -3,19 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:max_tp_firebase/models/post.dart';
 import 'package:max_tp_firebase/post_screen/add_post_bloc/add_post_bloc.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+class ModifPostScreen extends StatefulWidget {
+  final Post post;
+
+  const ModifPostScreen({super.key, required this.post});
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<ModifPostScreen> createState() => _ModifPostScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+class _ModifPostScreenState extends State<ModifPostScreen> {
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
 
   @override
   void initState() {
+    _titleController = TextEditingController(text: widget.post.title);
+    _descriptionController =
+        TextEditingController(text: widget.post.description);
     super.initState();
   }
 
@@ -30,10 +35,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add post'),
+        title: const Text('Modify Post'),
       ),
       body: BlocConsumer<AddPostBloc, AddPostState>(
-        listener: _onAddPostListener,
+        listener: _onModifPostListener,
         builder: (context, state) {
           if (state.status == AddPostStatus.loading) {
             return const Center(child: CircularProgressIndicator());
@@ -41,29 +46,32 @@ class _AddPostScreenState extends State<AddPostScreen> {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
                   controller: _titleController,
                   decoration: const InputDecoration(labelText: 'Title'),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 TextField(
                   controller: _descriptionController,
                   decoration: const InputDecoration(labelText: 'Description'),
+                  maxLines: 3,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
                     context.read<AddPostBloc>().add(
-                          AddPost(
+                          UpdatePost(
                             Post(
+                              id: widget.post.id,
                               title: _titleController.text,
                               description: _descriptionController.text,
                             ),
                           ),
                         );
                   },
-                  child: const Text('Add post'),
+                  child: const Text('Save'),
                 ),
               ],
             ),
@@ -73,12 +81,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 
-  void _onAddPostListener(BuildContext context, AddPostState state) async {
+  void _onModifPostListener(BuildContext context, AddPostState state) async {
     if (state.status == AddPostStatus.success) {
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Post added successfully'),
+          content: Text('Post modified successfully'),
         ),
       );
     } else if (state.status == AddPostStatus.error) {

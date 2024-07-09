@@ -44,6 +44,9 @@ class _ListPostScreenState extends State<ListPostScreen> {
                   return ListTile(
                     title: Text(post.title),
                     subtitle: Text(post.description),
+                    onTap: () {
+                      GoRouter.of(context).go('/modif_post', extra: post);
+                    },
                   );
                 },
               );

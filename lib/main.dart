@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:max_tp_firebase/firebase_options.dart';
+import 'package:max_tp_firebase/models/post.dart';
 import 'package:max_tp_firebase/models/post_repository.dart';
 import 'package:max_tp_firebase/post_screen/add_post_bloc/add_post_bloc.dart';
 import 'package:max_tp_firebase/post_screen/add_post_screen.dart';
 import 'package:max_tp_firebase/post_screen/list_post_screen.dart';
+import 'package:max_tp_firebase/post_screen/modif_post_screen.dart';
 import 'package:max_tp_firebase/post_screen/post_bloc/post_bloc.dart';
 
 final GoRouter _router = GoRouter(
@@ -21,6 +23,13 @@ final GoRouter _router = GoRouter(
           path: 'add_post',
           builder: (BuildContext context, GoRouterState state) {
             return const AddPostScreen();
+          },
+        ),
+        GoRoute(
+          path: 'modif_post',
+          builder: (BuildContext context, GoRouterState state) {
+            final post = state.extra as Post;
+            return ModifPostScreen(post: post);
           },
         ),
       ],
